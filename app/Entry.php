@@ -13,7 +13,8 @@ use wechat\Wx;
 
 class Entry
 {
-	private $wx;//微信信息
+	private $wx;//粉丝发来的微信信息
+	private $config;//粉丝发来的微信信息
 
 
 	/**
@@ -23,12 +24,16 @@ class Entry
 	public function __construct ()
 	{
 		//设置常用配置项,用一个数组来储存起来
-		$config=[
+		$this->config=$config=[
 			'token'=>'ztj1010',//开发者令牌
 			'appID'=>'wxbdd94055d9c7cb12',//开发者ID
 			'appsecret'=>'bde2e648174f18b0168e850abccb2462',//开发者秘钥
 			'interfacedamin'=>'https://api.weixin.qq.com',//接口域名地址apiurl
+			'ToUserName'=>'gh_1bbfc33ada53',//信息接收人（公众测试号）
+			'FromUserName'=>'onQSk1OjFUcWDJELWOX65JpbOcJI',//消息发送人（粉丝）
+
 		];
+		//p ($config);die();//OK
 		//1、跟微信服务器通信（需要一直开着知道测试结束）
 			$this->wx=new Wx($config);//实例化调用Wx这个类
 			$this->wx->valid ();//验证连接微信通信配置是否成功OK
@@ -67,7 +72,7 @@ class Entry
 //<Content><![CDATA[你好;我很忙]]></Content>
 //</xml>
 //message;
-// echo $str;//测试OK
+ //echo $str;//测试OK
 
 
 		////4、封装给粉丝的回复信息;
@@ -158,7 +163,7 @@ class Entry
 				//	echo $this->wx->curl ('http://www.baidu.com');//正常输出
 
 		//2、测试获取access_token
-				//echo $this->wx->getAccessToken();//OK
+		//		echo $this->wx->getAccessToken();//OK
 
 		//3、创建测试菜单
 				//1、click和view的请求示例()
@@ -195,17 +200,57 @@ str;
 		       		//p ($res);//OK
 
 		//5、获得用户信息
-					//$FromUserName='onQSk1OjFUcWDJELWOX65JpbOcJI';//粉丝id
+					$FromUserName='onQSk1OjFUcWDJELWOX65JpbOcJI';//粉丝id
 					//$res=$this->wx->instance ('user')->getUserInfo($FromUserName);
 					//p ($res);//OK
 
-		//6、批量获得粉丝信息
+		//6、批量获得粉丝信息（需要传输粉丝的id数据）
 					$FromUserName1='onQSk1OjFUcWDJELWOX65JpbOcJI';//粉丝ID
 					$FromUserName2='onQSk1OjFUcWDJELWOX65JpbOcJI';//粉丝ID
-					$res=$this->wx->instance ('user')->getFansInfo([$FromUserName1,$FromUserName2]);
+					$FromUserName3='onQSk1LErGuh57FdVEjpmZNEcr0A';//粉丝ID
+					$res=$this->wx->instance ('user')->getFansInfo([$FromUserName1,$FromUserName2,$FromUserName3]);
 					//p ($res);//OK
 
+//—————————————————————练习部分2018年3月31日14:18:49————————————————————————
+//			$className=$this->wx->instance ('message');//实例化信息类
 
+		/**
+		 *1、自定义菜单事件(需要先创建菜单)点击菜单拉取消息时的事件推送
+		 */
+		//	if ($className->isClick()){
+		//	return $className->text('我是自定义菜单事件');
+		//}
+
+
+
+
+		 /**
+		  * 3、获取微信服务器IP地址
+		  */
+		 	//p ($className->getIp());//获取OK
+
+
+		/**
+		 * 4、测试设置用户备注名（备注名字汉字不显示）
+		 * 备注名如果是汉子会被转成编码
+		 */
+			$userName=$this->wx->instance ('user');//实例化信息类
+		    //$userName->reMark('onQSk1OjFUcWDJELWOX65JpbOcJI','今天');//OK 可以通过上面的粉丝信息查看remake是否变化
+
+		/**
+		 * 5、测试标签创建配合下面的6使用（汉字不显示）
+		 */
+			 //echo  $userName->createTag('目目');//OK
+
+		/**
+		 * 6、获取公众号已创建的标签
+		 */
+			//p ($userName->getTags());//OK
+
+		/**
+		 * 7、删除标签
+		 */
+		//echo $userName->deleteTags(108);
 	}
 
 }

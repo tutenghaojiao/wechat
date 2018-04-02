@@ -33,7 +33,7 @@ class Wx
 
 
 	/**
-	 * 1、微信通信验证
+	 * 1、微信通信有效验证（提交配置要显示成功）
 	 */
 	public function valid ()
 	{
@@ -81,8 +81,8 @@ class Wx
 
 
 	/**
-	 * 3、实例化功能类
-	 * @param $class  需要连接的类名
+	 * 3、实例自动化功能类
+	 * @param $class  需要实例化的类名
 	 */
 	public function instance($class){
 		$className='\wechat\build\\'.ucfirst($class);
@@ -127,12 +127,12 @@ class Wx
 	}
 
 	/**
-	 * 2、获取access_token
+	 * 2、获取access_token（访问令牌）
 	 */
 	public function getAccessToken()
 	{
 		//1.创建缓存目录
-			$dir=__DIR__.'/cache';
+			$dir=__DIR__.'/cache';//把文件创建在同级文件目录里面
 			//p ($dir);die();///www/wwwroot/wechat.houdunphp.cn/wechat/cache
 			is_dir ($dir)||mkdir ($dir,0777,true);
 
@@ -142,7 +142,6 @@ class Wx
 		//3、组合成一个完整文件目录
 			$fullPath=$dir.'/'.$fileName;
 			//p ($fullPath);die();//OK
-
 
 
 		//5、由于access_token的有效期目前为2个小时，需定时刷新，重复获取将导致上次获取的access_token失效。（每天调用上限2000次）;需要判定

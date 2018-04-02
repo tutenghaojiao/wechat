@@ -23,6 +23,8 @@ class Message extends Wx
 	//________________________________________事件消息常量_________________________________
 	const MSG_EVENT_SUBSCRIBE   = 'subscribe';//订阅常量
 	const MSG_EVENT_UNSUBSCRIBE = 'unsubscribe';//取消订阅常量
+	const MSG_EVENT_CLICK='CLICK';//自定义菜单事件
+	const MSG_EVENT_VIEW='VIEW';//自定义菜单事件
 
 
 	/**
@@ -79,6 +81,30 @@ foreach($data as $v){
 		$res.="</Articles></xml>";
 		echo $res;
 	}
+	//________________________________________ 2018年3月31日15:02:23 _________________________________
+	/**
+	 * 1、菜单消息回复(有问题)
+	 */
+	public function menuClick($url){
+		p ($url);die();
+		$confingData=self::$config;
+		//p ($confingData);die();
+		$time=time ();
+		$str=<<<str
+<xml>
+<ToUserName><![CDATA[{$confingData['ToUserName']}]></ToUserName>
+<FromUserName><![CDATA[{$confingData['FromUserName']}]]></FromUserName>
+<CreateTime>{$time}</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[VIEW]]></Event>
+<EventKey><![CDATA[{$url}]]></EventKey>
+</xml>
+str;
+		echo $str;
+
+	}
+
+
 	//________________________________________普通消息判定_________________________________
 
 	/**
@@ -172,8 +198,32 @@ foreach($data as $v){
 	public function isUnSubscribe ()
 	{
 		return $this->getMessage ()->MsgType == 'event' && $this->getMessage ()->Event == self::MSG_EVENT_UNSUBSCRIBE;
+	}
 
+	//________________________________________事件消息判定2018年3月31日14:17:02_________________________________
 
+	/**
+	 * 3、自定义菜单事件
+	 */
+	public function isClick(){
+		return $this->getMessage ()->MsgType=='event' && $this->getMessage ()->Event==self::MSG_EVENT_CLICK;
+	}
+
+	/**
+	 * 4、自定义菜单事件(问题无法实现)
+	 */
+	public function isView(){
+		return $this->getMessage ()->MsgType=='event' && $this->getMessage ()->Event==self::MSG_EVENT_VIEW;
+	}
+
+	/**
+	 * 5、获取微信服务器IP地址
+	 */
+	public function getIp(){
+		//http请求方式: GET
+		$url=self::$config['interfacedamin'].'/cgi-bin/getcallbackip?access_token='.$this->getAccessToken ();
+		//return $this->curl ($url);die();//json格式的数据
+		return json_decode ($this->curl ($url),true);//转换成php数组格式
 	}
 
 
