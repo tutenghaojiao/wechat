@@ -1,0 +1,13 @@
+{
+    "name": "ztj/wechat",
+    "description": "'wechat connector development'",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "tutenghaojiao",
+            "email": "473995726@qq.com"
+        }
+    ],
+    "require": {}
+}
