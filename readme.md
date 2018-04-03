@@ -13,5 +13,7 @@
                     Message.php     消息管理器类
                     User.php        用户管理类
                     
-                B->Wx.php           微信基础类        
+                B->Wx.php           微信基础类 
+
+                C->       
                     
