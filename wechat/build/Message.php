@@ -222,6 +222,7 @@ str;
 	public function getIp(){
 		//http请求方式: GET
 		$url=self::$config['interfacedamin'].'/cgi-bin/getcallbackip?access_token='.$this->getAccessToken ();
+		//p ($url);die();
 		//return $this->curl ($url);die();//json格式的数据
 		return json_decode ($this->curl ($url),true);//转换成php数组格式
 	}

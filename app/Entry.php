@@ -11,36 +11,8 @@ use wechat\Wx;
  *date               2018/3/29 14:52:14
  */
 
-class Entry
+class Entry extends Common
 {
-	private $wx;//粉丝发来的微信信息
-	private $config;//粉丝发来的微信信息
-
-
-	/**
-	 * 自动连接微信通信
-	 * Entry constructor.
-	 */
-	public function __construct ()
-	{
-		//设置常用配置项,用一个数组来储存起来
-		$this->config=$config=[
-			'token'=>'ztj1010',//开发者令牌
-			'appID'=>'wxbdd94055d9c7cb12',//开发者ID
-			'appsecret'=>'bde2e648174f18b0168e850abccb2462',//开发者秘钥
-			'interfacedamin'=>'https://api.weixin.qq.com',//接口域名地址apiurl
-			'ToUserName'=>'gh_1bbfc33ada53',//信息接收人（公众测试号）
-			'FromUserName'=>'onQSk1OjFUcWDJELWOX65JpbOcJI',//消息发送人（粉丝）
-
-		];
-		//p ($config);die();//OK
-		//1、跟微信服务器通信（需要一直开着知道测试结束）
-			$this->wx=new Wx($config);//实例化调用Wx这个类
-			$this->wx->valid ();//验证连接微信通信配置是否成功OK
-
-	}
-
-
 	/**
 	 * 功能测试
 	 */
@@ -163,7 +135,7 @@ class Entry
 				//	echo $this->wx->curl ('http://www.baidu.com');//正常输出
 
 		//2、测试获取access_token
-		//		echo $this->wx->getAccessToken();//OK
+		//		echo  $this->wx->getAccessToken();//OK
 
 		//3、创建测试菜单
 				//1、click和view的请求示例()
@@ -200,7 +172,7 @@ str;
 		       		//p ($res);//OK
 
 		//5、获得用户信息
-					$FromUserName='onQSk1OjFUcWDJELWOX65JpbOcJI';//粉丝id
+		//			$FromUserName='onQSk1OjFUcWDJELWOX65JpbOcJI';//粉丝id
 					//$res=$this->wx->instance ('user')->getUserInfo($FromUserName);
 					//p ($res);//OK
 
@@ -208,7 +180,7 @@ str;
 					$FromUserName1='onQSk1OjFUcWDJELWOX65JpbOcJI';//粉丝ID
 					$FromUserName2='onQSk1OjFUcWDJELWOX65JpbOcJI';//粉丝ID
 					$FromUserName3='onQSk1LErGuh57FdVEjpmZNEcr0A';//粉丝ID
-					$res=$this->wx->instance ('user')->getFansInfo([$FromUserName1,$FromUserName2,$FromUserName3]);
+					//$res=$this->wx->instance ('user')->getFansInfo([$FromUserName1,$FromUserName2,$FromUserName3]);
 					//p ($res);//OK
 
 //—————————————————————练习部分2018年3月31日14:18:49————————————————————————
@@ -234,7 +206,7 @@ str;
 		 * 4、测试设置用户备注名（备注名字汉字不显示）
 		 * 备注名如果是汉子会被转成编码
 		 */
-			$userName=$this->wx->instance ('user');//实例化信息类
+			//$userName=$this->wx->instance ('user');//实例化信息类
 		    //$userName->reMark('onQSk1OjFUcWDJELWOX65JpbOcJI','今天');//OK 可以通过上面的粉丝信息查看remake是否变化
 
 		/**
@@ -250,7 +222,40 @@ str;
 		/**
 		 * 7、删除标签
 		 */
-		//echo $userName->deleteTags(108);
+			//echo $userName->deleteTags(105);
+
+
+//—————————————————————练习部分2018年4月2日16:17:59————————————————————————
+		/**
+		 * 1、测试错误翻译是否执行
+		 */
+		//$FromUserName='onQSk1OjFUcWDJELWOX65JpbOcJI'; //粉丝id
+		//$res=$this->wx->instance ('user')->getUserInfo($FromUserName);
+		//p ($res);//OK
+
+
+		/**
+		 *实例化素材这个类，方便后面测试调用
+		 */
+		//$meterial=$this->wx->instance ('meterial');
+
+		/**
+		 * 2、上传素材，素材文件必须保证服务器上有
+		 */
+		//$res=$meterial->uploadMeterial('dx.jpg',2);
+		//p ($res);//OK
+
+
+
+
+
+
+
+
+//—————————————————————练习部分2018年4月3日16:17:59————————————————————————
+
 	}
+
+
 
 }

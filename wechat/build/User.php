@@ -26,7 +26,7 @@ class User extends Wx
 			//p($lang);die();//开发者传的字体
 		//http请求方式: GET
 		$url=self::$config['interfacedamin'].'/cgi-bin/user/info?access_token='.$this->getAccessToken ().'&openid='.$openid.'&lang='.$lang;
-		return json_decode ($this->curl ($url),true);
+		return $this->translateError (json_decode ($this->curl ($url),true));
 
 	}
 

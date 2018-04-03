@@ -35,8 +35,18 @@ function __autoload($classname){
 	include_once $filde;//加载OK
 }
 
+//——————————————————————2018年4月2日19:31:50————————————————————————
+/**
+ * 1、通过get参数来构造变动的类名和方法名
+ */
+$controller=isset($_GET['c'])? $_GET['c']:'Entry';
+$controller='\app\\'.ucfirst ($controller);//类名拼接
+//p ($controller);die;
+$action=isset($_GET['a'])?strtolower ($_GET['a']):'handler';//方法明构造
+//p ($action);die();
+
 
 /**
  * 实例化一个未知的类和调用一个未知的方法
  */
-(new \app\Entry())->handler ();
+(new $controller())->$action ();

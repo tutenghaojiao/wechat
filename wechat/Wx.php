@@ -10,7 +10,7 @@ namespace wechat;
 
 
 
-class Wx
+class Wx extends Error
 {
 	protected static $config;//配置常用配置项成员属性
 
@@ -146,9 +146,9 @@ class Wx
 
 		//5、由于access_token的有效期目前为2个小时，需定时刷新，重复获取将导致上次获取的access_token失效。（每天调用上限2000次）;需要判定
 
-			if (is_file ($fullPath)&& filemtime ($fullPath)+7200>time ()){//如果接口文件存在，且时间没有超过2小时，那么就直接调用
+			if (is_file ($fullPath)&& filemtime ($fullPath)+7000>time ()){//如果接口文件存在，且时间没有超过2小时，那么就直接调用
 					//echo 1;//能输出说明存在
-					$data=include_once $fullPath;
+					$data=include $fullPath;
 					//p($data);die();
 			}else{//如果不存在就执行以下判断，重新调用接口
 				//echo 2;//能输出说明不存在
